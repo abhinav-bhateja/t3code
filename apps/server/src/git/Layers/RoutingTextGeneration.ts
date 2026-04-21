@@ -56,7 +56,7 @@ const makeRoutingTextGeneration = Effect.gen(function* () {
       ? claude
       : provider === "opencode"
         ? openCode
-        : provider === "cursor"
+        : provider === "cursor" || provider === "hermes"
           ? cursor
           : codex;
 

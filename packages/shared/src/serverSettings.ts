@@ -3,6 +3,7 @@ import {
   type ClaudeModelOptions,
   type CodexModelOptions,
   type CursorModelOptions,
+  type HermesModelOptions,
   type OpenCodeModelOptions,
   type ServerSettingsPatch,
 } from "@t3tools/contracts";
@@ -99,6 +100,14 @@ export function applyServerSettingsPatch(
                   selectionPatch.options as CursorModelOptions | undefined,
                 ),
               }
+            : provider === "hermes"
+              ? {
+                  provider,
+                  model,
+                  ...withModelSelectionOptions(
+                    selectionPatch.options as HermesModelOptions | undefined,
+                  ),
+                }
             : {
                 provider,
                 model,

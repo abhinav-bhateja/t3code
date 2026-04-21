@@ -5,6 +5,7 @@ import {
   type ClaudeModelOptions,
   type CodexModelOptions,
   type CursorModelOptions,
+  type HermesModelOptions,
   type ModelCapabilities,
   type ModelSelection,
   type OpenCodeModelOptions,
@@ -124,6 +125,13 @@ export function normalizeCursorModelOptionsWithCapabilities(
   return Object.keys(nextOptions).length > 0 ? nextOptions : undefined;
 }
 
+export function normalizeHermesModelOptionsWithCapabilities(
+  caps: ModelCapabilities,
+  modelOptions: HermesModelOptions | null | undefined,
+): HermesModelOptions | undefined {
+  return normalizeCursorModelOptionsWithCapabilities(caps, modelOptions);
+}
+
 function resolveLabeledOption(
   options: ReadonlyArray<{ value: string; isDefault?: boolean | undefined }> | undefined,
   raw: string | null | undefined,
@@ -162,6 +170,8 @@ export function normalizeProviderModelOptionsWithCapabilities(
       return normalizeClaudeModelOptionsWithCapabilities(caps, modelOptions as ClaudeModelOptions);
     case "cursor":
       return normalizeCursorModelOptionsWithCapabilities(caps, modelOptions as CursorModelOptions);
+    case "hermes":
+      return normalizeHermesModelOptionsWithCapabilities(caps, modelOptions as HermesModelOptions);
     case "opencode":
       return normalizeOpenCodeModelOptionsWithCapabilities(
         caps,
@@ -272,6 +282,12 @@ export function createModelSelection(
         provider,
         model,
         ...(options ? { options: options as CursorModelOptions } : {}),
+      };
+    case "hermes":
+      return {
+        provider,
+        model,
+        ...(options ? { options: options as HermesModelOptions } : {}),
       };
     case "opencode":
       return {

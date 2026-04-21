@@ -59,6 +59,13 @@ const PROVIDER_CUSTOM_MODEL_CONFIG: Record<ProviderKind, ProviderCustomModelConf
     placeholder: "your-cursor-model-slug",
     example: "claude-sonnet-4-6",
   },
+  hermes: {
+    provider: "hermes",
+    title: "Hermes",
+    description: "Save additional Hermes model slugs for the picker and `/model` command.",
+    placeholder: "your-hermes-model-slug",
+    example: "composer-2",
+  },
   opencode: {
     provider: "opencode",
     title: "OpenCode",
@@ -193,6 +200,12 @@ export function getCustomModelOptionsByProvider(
       providers,
       "cursor",
       selectedProvider === "cursor" ? selectedModel : undefined,
+    ),
+    hermes: getAppModelOptions(
+      settings,
+      providers,
+      "hermes",
+      selectedProvider === "hermes" ? selectedModel : undefined,
     ),
     opencode: getAppModelOptions(
       settings,

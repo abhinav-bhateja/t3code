@@ -140,6 +140,13 @@ const PROVIDER_SETTINGS: readonly InstallProviderSettings[] = [
     binaryDescription: "Path to the Cursor agent binary",
   },
   {
+    provider: "hermes",
+    title: "Hermes",
+    badgeLabel: "Early Access",
+    binaryPlaceholder: "Hermes agent binary path",
+    binaryDescription: "Path to the Hermes agent binary",
+  },
+  {
     provider: "opencode",
     title: "OpenCode",
     binaryPlaceholder: "OpenCode binary path",
@@ -544,6 +551,11 @@ export function GeneralSettingsPanel() {
         DEFAULT_UNIFIED_SETTINGS.providers.cursor.binaryPath ||
       settings.providers.cursor.customModels.length > 0,
     ),
+    hermes: Boolean(
+      settings.providers.hermes.binaryPath !==
+        DEFAULT_UNIFIED_SETTINGS.providers.hermes.binaryPath ||
+      settings.providers.hermes.customModels.length > 0,
+    ),
     opencode: Boolean(
       settings.providers.opencode.binaryPath !==
         DEFAULT_UNIFIED_SETTINGS.providers.opencode.binaryPath ||
@@ -560,6 +572,7 @@ export function GeneralSettingsPanel() {
     codex: "",
     claudeAgent: "",
     cursor: "",
+    hermes: "",
     opencode: "",
   });
   const [customModelErrorByProvider, setCustomModelErrorByProvider] = useState<
@@ -589,8 +602,8 @@ export function GeneralSettingsPanel() {
   const serverProviders = useServerProviders();
   const visibleProviderSettings = PROVIDER_SETTINGS.filter(
     (providerSettings) =>
-      providerSettings.provider !== "cursor" ||
-      serverProviders.some((provider) => provider.provider === "cursor"),
+      (providerSettings.provider !== "cursor" && providerSettings.provider !== "hermes") ||
+      serverProviders.some((provider) => provider.provider === providerSettings.provider),
   );
   const codexHomePath = settings.providers.codex.homePath;
   const logsDirectoryPath = observability?.logsDirectoryPath ?? null;
