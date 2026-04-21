@@ -30,8 +30,17 @@ export interface ProviderAdapterCapabilities {
    * Declares whether changing the model on an existing session is supported.
    */
   readonly sessionModelSwitch: ProviderSessionModelSwitchMode;
+  /**
+   * Indicates whether the adapter can emit `turn.plan.updated` / proposed-plan signals.
+   */
   readonly supportsProposedPlan?: boolean;
+  /**
+   * Indicates whether runtime approval request flows (`request.opened/resolved`) are supported.
+   */
   readonly supportsApprovals?: boolean;
+  /**
+   * Indicates whether structured user-input request flows are supported.
+   */
   readonly supportsUserInput?: boolean;
 }
 

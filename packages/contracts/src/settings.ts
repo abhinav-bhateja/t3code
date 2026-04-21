@@ -257,6 +257,7 @@ const CursorSettingsPatch = Schema.Struct({
   apiEndpoint: Schema.optionalKey(Schema.String),
   customModels: Schema.optionalKey(Schema.Array(Schema.String)),
 });
+
 const HermesSettingsPatch = Schema.Struct({
   enabled: Schema.optionalKey(Schema.Boolean),
   binaryPath: Schema.optionalKey(Schema.String),
