@@ -75,6 +75,12 @@ const ensureHermesThread = (
 const makeHermesAdapter = Effect.fn("makeHermesAdapter")(function* () {
   const cursor = yield* CursorAdapter;
   const hermesThreadIds = new Set<string>();
+  const capabilities: HermesAdapterShape["capabilities"] = {
+    ...cursor.capabilities,
+    supportsProposedPlan: cursor.capabilities.supportsProposedPlan ?? true,
+    supportsApprovals: cursor.capabilities.supportsApprovals ?? true,
+    supportsUserInput: cursor.capabilities.supportsUserInput ?? true,
+  };
 
   const startSession: HermesAdapterShape["startSession"] = (input) =>
     cursor.startSession(toCursorSessionStartInput(input)).pipe(
@@ -152,12 +158,7 @@ const makeHermesAdapter = Effect.fn("makeHermesAdapter")(function* () {
 
   return {
     provider: PROVIDER,
-    capabilities: {
-      sessionModelSwitch: "in-session",
-      supportsProposedPlan: true,
-      supportsApprovals: true,
-      supportsUserInput: true,
-    },
+    capabilities,
     startSession,
     sendTurn,
     interruptTurn,
